@@ -1,0 +1,215 @@
+/*
+ * HELIOSDESK — Smart Home / Today's View
+ */
+.hd-smart-home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 32px;
+}
+
+.hd-sh-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.hd-sh-greeting {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--hd-text);
+}
+
+.hd-sh-greeting span {
+  color: var(--hd-brand);
+}
+
+.hd-sh-date {
+  font-size: 13px;
+  color: var(--hd-text-muted);
+}
+
+.hd-sh-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.hd-sh-kpi-card {
+  background: var(--hd-surface);
+  border: 1px solid var(--hd-border);
+  border-radius: var(--hd-radius-lg);
+  padding: 20px;
+  box-shadow: var(--hd-shadow-sm);
+  transition: all var(--hd-transition);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hd-sh-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--hd-shadow-md);
+  border-color: var(--hd-brand-200);
+}
+
+.hd-sh-kpi-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--hd-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hd-sh-kpi-icon.invoices {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.hd-sh-kpi-icon.orders {
+  background: #DBEAFE;
+  color: #1E40AF;
+}
+
+.hd-sh-kpi-icon.tasks {
+  background: #F3E8FF;
+  color: #6B21A8;
+}
+
+.hd-sh-kpi-icon.todos {
+  background: var(--hd-brand-50);
+  color: var(--hd-brand-700);
+}
+
+.hd-sh-kpi-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--hd-text);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.hd-sh-kpi-label {
+  font-size: 12px;
+  color: var(--hd-text-muted);
+  font-weight: 500;
+}
+
+.hd-sh-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+}
+
+.hd-sh-section {
+  background: var(--hd-surface);
+  border: 1px solid var(--hd-border);
+  border-radius: var(--hd-radius-lg);
+  box-shadow: var(--hd-shadow-sm);
+  overflow: hidden;
+}
+
+.hd-sh-section-head {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--hd-border);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--hd-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hd-sh-section-body {
+  padding: 12px 20px;
+}
+
+.hd-sh-recent-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hd-border-light);
+}
+
+.hd-sh-recent-item:last-child {
+  border-bottom: none;
+}
+
+.hd-sh-recent-doctype {
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--hd-bg-alt);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--hd-text-secondary);
+}
+
+.hd-sh-recent-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--hd-text);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hd-sh-quick-create {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  cursor: pointer;
+  color: var(--hd-brand);
+  font-weight: 600;
+  font-size: 12.5px;
+  transition: color var(--hd-transition);
+}
+
+.hd-sh-quick-create:hover {
+  color: var(--hd-brand-600);
+}
+
+.hd-sh-pending-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hd-border-light);
+  font-size: 13px;
+  color: var(--hd-text);
+}
+
+.hd-sh-pending-item:last-child {
+  border-bottom: none;
+}
+
+.hd-sh-pending-item .hd-sh-pending-icon {
+  color: var(--hd-accent);
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hd-sh-kpi-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hd-sh-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hd-smart-home {
+    padding: 16px;
+  }
+  .hd-sh-kpi-row {
+    grid-template-columns: 1fr;
+  }
+}

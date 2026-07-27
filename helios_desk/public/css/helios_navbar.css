@@ -1,0 +1,165 @@
+/*
+ * HELIOSDESK — Navbar / Top Toolbar
+ */
+.navbar {
+  background: var(--hd-navbar-bg) !important;
+  height: var(--hd-navbar-h) !important;
+  border-bottom: none !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 0 16px !important;
+  z-index: 20;
+}
+
+.navbar .navbar-brand {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--hd-navbar-text) !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar .navbar-brand img {
+  max-height: 24px;
+}
+
+.navbar a,
+.navbar .icon {
+  color: rgba(255,255,255,0.8) !important;
+  transition: color var(--hd-transition);
+}
+
+.navbar a:hover,
+.navbar .icon:hover {
+  color: #fff !important;
+}
+
+/* Top toolbar (HeliosDesk custom) */
+.hd-toolbar {
+  display: flex;
+  align-items: center;
+  height: var(--hd-toolbar-h);
+  padding: 0 20px;
+  background: var(--hd-surface);
+  border-bottom: 1px solid var(--hd-border);
+  gap: 8px;
+  z-index: 18;
+  position: relative;
+}
+
+.hd-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.hd-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hd-toolbar .hd-clock {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--hd-text-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 60px;
+}
+
+.hd-toolbar .hd-search-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--hd-bg-alt);
+  border: 1px solid var(--hd-border);
+  border-radius: var(--hd-radius-pill);
+  font-size: 12.5px;
+  color: var(--hd-text-muted);
+  cursor: pointer;
+  transition: all var(--hd-transition);
+  min-width: 200px;
+}
+
+.hd-toolbar .hd-search-btn:hover {
+  border-color: var(--hd-brand);
+  background: var(--hd-surface);
+  color: var(--hd-text);
+}
+
+.hd-toolbar .hd-search-btn kbd {
+  margin-left: auto;
+}
+
+/* Toolbar icon buttons */
+.hd-tb-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--hd-radius);
+  border: none;
+  background: transparent;
+  color: var(--hd-text-muted);
+  cursor: pointer;
+  transition: all var(--hd-transition);
+  position: relative;
+}
+
+.hd-tb-btn:hover {
+  background: var(--hd-bg-alt);
+  color: var(--hd-text);
+}
+
+.hd-tb-btn .hd-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--hd-radius-pill);
+  background: var(--hd-accent);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* User avatar button */
+.hd-user-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--hd-border);
+  background: var(--hd-bg-alt);
+  color: var(--hd-text);
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--hd-transition);
+}
+
+.hd-user-btn:hover {
+  border-color: var(--hd-brand);
+}
+
+/* Divider */
+.hd-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--hd-border);
+  margin: 0 4px;
+}
+
+/* Hide Frappe's native page icon in title area */
+.page-icon-group { display: none !important; }

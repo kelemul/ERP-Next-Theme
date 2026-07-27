@@ -1,0 +1,175 @@
+{
+ "actions": [],
+ "creation": "2026-07-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "general_section",
+  "company_name",
+  "company_tagline",
+  "logo",
+  "favicon",
+  "theme_section",
+  "primary_color",
+  "primary_hue_offset",
+  "brand_style",
+  "sidebar_style",
+  "navbar_style",
+  "advanced_section",
+  "default_theme_mode",
+  "default_density",
+  "default_font_scale",
+  "enable_command_palette",
+  "enable_smart_home",
+  "enable_progressive_forms",
+  "enable_real_time_broadcast",
+  "custom_css",
+  "custom_js"
+ ],
+ "fields": [
+  {
+   "fieldname": "general_section",
+   "fieldtype": "Section Break",
+   "label": "General"
+  },
+  {
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "label": "Company Name",
+   "description": "Shown in sidebar header and browser title"
+  },
+  {
+   "fieldname": "company_tagline",
+   "fieldtype": "Data",
+   "label": "Tagline",
+   "description": "Appended after company name in browser title"
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo"
+  },
+  {
+   "fieldname": "favicon",
+   "fieldtype": "Attach",
+   "label": "Favicon"
+  },
+  {
+   "fieldname": "theme_section",
+   "fieldtype": "Section Break",
+   "label": "Theme"
+  },
+  {
+   "fieldname": "primary_color",
+   "fieldtype": "Color",
+   "label": "Primary Color",
+   "default": "#6366F1"
+  },
+  {
+   "fieldname": "primary_hue_offset",
+   "fieldtype": "Int",
+   "label": "Primary Hue Offset",
+   "description": "Hue rotation for derived palette tones (±30)",
+   "default": 0
+  },
+  {
+   "fieldname": "brand_style",
+   "fieldtype": "Select",
+   "label": "Brand Style",
+   "options": "Modern\nClassic\nMinimal\nBold\nWarm",
+   "default": "Modern"
+  },
+  {
+   "fieldname": "sidebar_style",
+   "fieldtype": "Select",
+   "label": "Sidebar Style",
+   "options": "Gradient\nSolid\nFrosted",
+   "default": "Gradient"
+  },
+  {
+   "fieldname": "navbar_style",
+   "fieldtype": "Select",
+   "label": "Navbar Style",
+   "options": "Frosted\nSolid\nColored",
+   "default": "Frosted"
+  },
+  {
+   "fieldname": "advanced_section",
+   "fieldtype": "Section Break",
+   "label": "Advanced",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "default_theme_mode",
+   "fieldtype": "Select",
+   "label": "Default Theme Mode",
+   "options": "Light\nDark\nAuto",
+   "default": "Light"
+  },
+  {
+   "fieldname": "default_density",
+   "fieldtype": "Select",
+   "label": "Default Density",
+   "options": "Comfortable\nCompact\nUltra-Compact",
+   "default": "Comfortable"
+  },
+  {
+   "fieldname": "default_font_scale",
+   "fieldtype": "Percent",
+   "label": "Default Font Scale",
+   "default": 100
+  },
+  {
+   "fieldname": "enable_command_palette",
+   "fieldtype": "Check",
+   "label": "Enable Command Palette (Ctrl+K)",
+   "default": 1
+  },
+  {
+   "fieldname": "enable_smart_home",
+   "fieldtype": "Check",
+   "label": "Enable Smart Home Dashboard",
+   "default": 1
+  },
+  {
+   "fieldname": "enable_progressive_forms",
+   "fieldtype": "Check",
+   "label": "Enable Progressive Forms",
+   "default": 1
+  },
+  {
+   "fieldname": "enable_real_time_broadcast",
+   "fieldtype": "Check",
+   "label": "Enable Real-Time Broadcast",
+   "default": 1
+  },
+  {
+   "fieldname": "custom_css",
+   "fieldtype": "Code",
+   "label": "Custom CSS",
+   "options": "CSS"
+  },
+  {
+   "fieldname": "custom_js",
+   "fieldtype": "Code",
+   "label": "Custom JavaScript",
+   "options": "JS"
+  }
+ ],
+ "issingle": 1,
+ "modified": "2026-07-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "HeliosDesk",
+ "name": "Helios Theme Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

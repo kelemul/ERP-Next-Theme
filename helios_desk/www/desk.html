@@ -1,0 +1,26 @@
+{%
+  include "templates/includes/head.html" %}
+<style>
+  /* Flash-free guard: hide until HeliosDesk init runs */
+  body.hd-active { background: #fff; }
+</style>
+<script>
+  // Flash-free init (inlined for speed)
+  (function () {
+    var mode = localStorage.getItem("hd_theme_mode") || "Light";
+    if (mode === "Auto") {
+      mode = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "Dark"
+        : "Light";
+    }
+    if (mode === "Dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.style.backgroundColor = "#0F172A";
+    }
+    var density = localStorage.getItem("hd_density") || "Comfortable";
+    document.documentElement.setAttribute("data-density", density);
+  })();
+</script>
+<body class="hd-active">
+  {% include "templates/includes/footer.html" %}
+</body>

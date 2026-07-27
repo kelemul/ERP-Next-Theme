@@ -1,0 +1,158 @@
+/*
+ * HELIOSDESK — Sidebar
+ * Slim icon sidebar with expand/collapse
+ */
+.sidebar-container {
+  background: var(--hd-sidebar-bg) !important;
+  border-right: 1px solid var(--hd-border) !important;
+  width: var(--hd-sidebar-w) !important;
+  transition: width var(--hd-transition);
+  overflow: hidden;
+  z-index: 15;
+}
+
+.sidebar-container.collapsed {
+  width: var(--hd-sidebar-collapsed) !important;
+}
+
+/* Sidebar header with logo + company name */
+.sidebar-header {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--hd-border);
+  gap: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar-header .hd-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--hd-radius);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hd-brand);
+  color: var(--hd-brand-text);
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.sidebar-header .hd-company-name {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--hd-text);
+  opacity: 1;
+  transition: opacity var(--hd-transition);
+}
+
+.collapsed .sidebar-header .hd-company-name {
+  opacity: 0;
+  width: 0;
+}
+
+/* Sidebar items */
+.sidebar-item-container {
+  margin: 2px 6px !important;
+}
+
+.sidebar-item {
+  border-radius: var(--hd-radius) !important;
+  padding: 8px 12px !important;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--hd-sidebar-text) !important;
+  transition: background var(--hd-transition), color var(--hd-transition), padding var(--hd-transition);
+  background: transparent;
+  min-height: 38px;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-item .sidebar-item-icon {
+  width: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-item .sidebar-item-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-item:hover {
+  background: var(--hd-sidebar-hover) !important;
+  color: var(--hd-text) !important;
+}
+
+.sidebar-item-container.selected > .sidebar-item {
+  background: var(--hd-sidebar-active) !important;
+  color: var(--hd-sidebar-text-active) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.25);
+}
+
+/* Sidebar section labels */
+.sidebar-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--hd-text-muted);
+  padding: 12px 14px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.collapsed .sidebar-section-label {
+  text-align: center;
+  font-size: 8px;
+  padding: 8px 0 2px;
+}
+
+/* Collapse toggle button */
+.sidebar-collapse-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--hd-border);
+  background: var(--hd-sidebar-bg);
+  cursor: pointer;
+  color: var(--hd-text-muted);
+  transition: color var(--hd-transition);
+  gap: 6px;
+  font-size: 12px;
+}
+
+.sidebar-collapse-btn:hover {
+  color: var(--hd-text);
+}
+
+/* Tooltip on collapsed sidebar items */
+.sidebar-container.collapsed .sidebar-item {
+  justify-content: center;
+  padding: 8px 0 !important;
+}
+
+.sidebar-container.collapsed .sidebar-item-label {
+  display: none;
+}
+
+/* Hide Frappe native elements we replace */
+.sidebar-container .sidebar-header-onscroll,
+.sidebar-container .sidebar-footer,
+.sidebar-container .standard-sidebar-section:last-child .sidebar-item-label {
+  /* selectively hidden by JS */
+}

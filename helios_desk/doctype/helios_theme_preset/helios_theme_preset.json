@@ -1,0 +1,72 @@
+{
+ "actions": [],
+ "creation": "2026-07-27 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "preset_name",
+  "primary_color",
+  "brand_style",
+  "sidebar_style",
+  "navbar_style",
+  "is_default"
+ ],
+ "fields": [
+  {
+   "fieldname": "preset_name",
+   "fieldtype": "Data",
+   "label": "Preset Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "primary_color",
+   "fieldtype": "Color",
+   "label": "Primary Color",
+   "default": "#6366F1"
+  },
+  {
+   "fieldname": "brand_style",
+   "fieldtype": "Select",
+   "label": "Brand Style",
+   "options": "Modern\nClassic\nMinimal\nBold\nWarm",
+   "default": "Modern"
+  },
+  {
+   "fieldname": "sidebar_style",
+   "fieldtype": "Select",
+   "label": "Sidebar Style",
+   "options": "Gradient\nSolid\nFrosted",
+   "default": "Gradient"
+  },
+  {
+   "fieldname": "navbar_style",
+   "fieldtype": "Select",
+   "label": "Navbar Style",
+   "options": "Frosted\nSolid\nColored",
+   "default": "Frosted"
+  },
+  {
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "label": "Is Default",
+   "default": 0
+  }
+ ],
+ "modified": "2026-07-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "HeliosDesk",
+ "name": "Helios Theme Preset",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "delete": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

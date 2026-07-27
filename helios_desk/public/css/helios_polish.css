@@ -1,0 +1,116 @@
+/*
+ * HELIOSDESK — Polish: Motion, Glass, Depth, Refinements
+ * Loaded last to override everything with premium feel.
+ */
+
+/* -- Glass toolbar -- */
+.hd-toolbar {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.85) !important;
+}
+
+[data-theme="dark"] .hd-toolbar {
+  background: rgba(30,41,59,0.85) !important;
+}
+
+/* -- Glass dropdowns + modals -- */
+.dropdown-menu,
+.awesomplete > ul,
+.hd-command-modal,
+.hd-notif-panel {
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+/* -- Smooth transitions on all interactive elements -- */
+.sidebar-item,
+.btn,
+.form-control,
+a,
+.hd-tb-btn,
+.hd-user-btn,
+.widget.shortcut-widget-box,
+.frappe-card,
+.panel {
+  will-change: transform, opacity;
+}
+
+/* -- Button press feedback -- */
+.btn:active,
+.hd-tb-btn:active {
+  transform: scale(0.96) !important;
+}
+
+/* -- Card hover lift -- */
+.frappe-card:hover,
+.panel:hover {
+  transform: translateY(-1px);
+}
+
+/* -- Focus-visible ring refinement -- */
+:focus-visible {
+  outline: 2px solid var(--hd-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 4px rgba(99,102,241,0.15);
+}
+
+/* -- Selection tint -- */
+::selection {
+  background: var(--hd-brand-200);
+  color: var(--hd-brand-900);
+}
+
+/* -- Skeleton shimmer -- */
+@keyframes hdShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.hd-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--hd-bg-alt) 25%,
+    var(--hd-surface-hover) 50%,
+    var(--hd-bg-alt) 75%
+  );
+  background-size: 200% 100%;
+  animation: hdShimmer 1.5s ease-in-out infinite;
+  border-radius: var(--hd-radius);
+}
+
+/* -- Tabular numerals on data -- */
+.table tbody td,
+.list-row .list-id,
+.grid-static-col,
+.hd-sh-kpi-number,
+.hd-clock {
+  font-variant-numeric: tabular-nums;
+}
+
+/* -- Reduced motion -- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .hd-command-modal,
+  .hd-notif-panel {
+    transform: none !important;
+  }
+}
+
+/* -- Print styles -- */
+@media print {
+  .hd-toolbar,
+  .hd-command-overlay,
+  .hd-notif-panel,
+  .sidebar-container,
+  .navbar {
+    display: none !important;
+  }
+}

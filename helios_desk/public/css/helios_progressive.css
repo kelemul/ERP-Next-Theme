@@ -1,0 +1,40 @@
+/*
+ * HELIOSDESK — Progressive Forms (optional fields toggle)
+ */
+.hd-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+  border-top: 1px dashed var(--hd-border);
+  margin-top: 4px;
+}
+
+.hd-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border: 1px dashed var(--hd-border);
+  border-radius: var(--hd-radius-pill);
+  background: transparent;
+  color: var(--hd-text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--hd-transition);
+}
+
+.hd-toggle-btn:hover {
+  border-color: var(--hd-brand);
+  background: var(--hd-brand-50);
+  color: var(--hd-brand-700);
+}
+
+.hd-field-hidden {
+  display: none !important;
+}
+
+.hd-section-hidden {
+  display: none !important;
+}

@@ -1,0 +1,182 @@
+/*
+ * HELIOSDESK — Modals & Dialogs
+ */
+.modal-backdrop {
+  background: rgba(15,23,42,0.55) !important;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  border: none !important;
+  border-radius: var(--hd-radius-xl) !important;
+  box-shadow: var(--hd-shadow-xl), 0 0 0 1px rgba(255,255,255,0.06) !important;
+  overflow: hidden;
+  position: relative;
+  background: var(--hd-surface) !important;
+}
+
+.modal-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--hd-brand), var(--hd-accent));
+  z-index: 5;
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--hd-border) !important;
+  padding: 20px 28px 16px;
+}
+
+.modal-header .modal-title {
+  font-size: 1.1rem;
+}
+
+.modal-header .close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: var(--hd-text-muted);
+  transition: all var(--hd-transition);
+}
+
+.modal-header .close:hover {
+  background: var(--hd-bg-alt);
+  transform: rotate(90deg);
+  color: var(--hd-text);
+}
+
+.modal-body {
+  padding: 24px 28px;
+}
+
+.modal-footer {
+  border-top: 1px solid var(--hd-border) !important;
+  padding: 16px 28px;
+  gap: 8px;
+}
+
+.modal.fade .modal-dialog {
+  transform: scale(0.92) translateY(20px);
+  opacity: 0;
+  transition: transform 280ms var(--hd-ease-out), opacity 180ms ease;
+}
+
+.modal.show .modal-dialog {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Alerts / Toasts */
+.desk-alert,
+.alert {
+  border-radius: var(--hd-radius-lg) !important;
+  box-shadow: var(--hd-shadow-lg);
+  border: none !important;
+  padding: 14px 20px;
+  font-weight: 500;
+  animation: hdSlideIn 0.3s ease;
+}
+
+@keyframes hdSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.alert-primary {
+  background: var(--hd-brand-50) !important;
+  color: var(--hd-brand-700) !important;
+  border-left: 3px solid var(--hd-brand) !important;
+}
+
+.alert-danger {
+  background: #FEF2F2 !important;
+  color: #991B1B !important;
+  border-left: 3px solid #EF4444 !important;
+}
+
+.alert-success {
+  background: #F0FDF4 !important;
+  color: #166534 !important;
+  border-left: 3px solid #22C55E !important;
+}
+
+.alert-warning {
+  background: #FFFBEB !important;
+  color: #92400E !important;
+  border-left: 3px solid var(--hd-accent) !important;
+}
+
+/* Dropdowns */
+.dropdown-menu {
+  border: 1px solid var(--hd-border) !important;
+  border-radius: var(--hd-radius-lg) !important;
+  box-shadow: var(--hd-shadow-lg) !important;
+  padding: 6px !important;
+  background: var(--hd-glass-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  animation: hdPopIn 0.12s ease;
+}
+
+@keyframes hdPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdown-menu > li > a {
+  border-radius: var(--hd-radius);
+  padding: 7px 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--hd-text);
+  transition: background var(--hd-transition);
+}
+
+.dropdown-menu > li > a:hover {
+  background: var(--hd-brand-50);
+  color: var(--hd-brand-700);
+}
+
+/* Awesomplete */
+.awesomplete > ul {
+  background: var(--hd-glass-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--hd-border) !important;
+  border-radius: var(--hd-radius-lg) !important;
+  box-shadow: var(--hd-shadow-lg) !important;
+  padding: 6px !important;
+}
+
+.awesomplete > ul > li {
+  color: var(--hd-text) !important;
+  border-radius: var(--hd-radius) !important;
+  padding: 8px 14px !important;
+  font-size: 13px !important;
+}
+
+.awesomplete > ul > li:hover,
+.awesomplete > ul > li[aria-selected="true"] {
+  background: var(--hd-brand-50) !important;
+  color: var(--hd-brand-700) !important;
+}
