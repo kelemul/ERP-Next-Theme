@@ -1,9 +1,4 @@
-/*
- * HELIOSDESK — Polish: Motion, Glass, Depth, Refinements
- * Loaded last to override everything with premium feel.
- */
-
-/* -- Glass toolbar -- */
+/* ---- Glass toolbar ---- */
 .hd-toolbar {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -14,16 +9,14 @@
   background: rgba(30,41,59,0.85) !important;
 }
 
-/* -- Glass dropdowns + modals -- */
+/* ---- Glass menus ---- */
 .dropdown-menu,
-.awesomplete > ul,
-.hd-command-modal,
-.hd-notif-panel {
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+.awesomplete > ul {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
-/* -- Smooth transitions on all interactive elements -- */
+/* ---- Smooth transitions ---- */
 .sidebar-item,
 .btn,
 .form-control,
@@ -36,33 +29,19 @@ a,
   will-change: transform, opacity;
 }
 
-/* -- Button press feedback -- */
+/* ---- Button press feedback ---- */
 .btn:active,
 .hd-tb-btn:active {
   transform: scale(0.96) !important;
 }
 
-/* -- Card hover lift -- */
+/* ---- Card hover lift ---- */
 .frappe-card:hover,
 .panel:hover {
   transform: translateY(-1px);
 }
 
-/* -- Focus-visible ring refinement -- */
-:focus-visible {
-  outline: 2px solid var(--hd-brand);
-  outline-offset: 2px;
-  border-radius: 4px;
-  box-shadow: 0 0 0 4px rgba(99,102,241,0.15);
-}
-
-/* -- Selection tint -- */
-::selection {
-  background: var(--hd-brand-200);
-  color: var(--hd-brand-900);
-}
-
-/* -- Skeleton shimmer -- */
+/* ---- Skeleton shimmer ---- */
 @keyframes hdShimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -80,7 +59,7 @@ a,
   border-radius: var(--hd-radius);
 }
 
-/* -- Tabular numerals on data -- */
+/* ---- Tabular numerals ---- */
 .table tbody td,
 .list-row .list-id,
 .grid-static-col,
@@ -89,28 +68,17 @@ a,
   font-variant-numeric: tabular-nums;
 }
 
-/* -- Reduced motion -- */
+/* ---- Reduced motion ---- */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-
-  .hd-command-modal,
-  .hd-notif-panel {
-    transform: none !important;
-  }
+  .hd-command-modal, .hd-notif-panel { transform: none !important; }
 }
 
-/* -- Print styles -- */
+/* ---- Print styles ---- */
 @media print {
-  .hd-toolbar,
-  .hd-command-overlay,
-  .hd-notif-panel,
-  .sidebar-container,
-  .navbar {
-    display: none !important;
-  }
+  .hd-toolbar, .hd-command-overlay, .hd-notif-panel,
+  .sidebar-container, .navbar { display: none !important; }
 }

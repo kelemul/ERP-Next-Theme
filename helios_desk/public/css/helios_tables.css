@@ -1,29 +1,12 @@
-/*
- * HELIOSDESK — Tables, List View & Grid
- */
 .layout-main-section {
   background: var(--hd-surface);
   border-radius: var(--hd-radius-lg);
-  box-shadow: var(--hd-shadow-md);
+  box-shadow: var(--hd-shadow-sm);
   padding: 20px 24px;
   margin-bottom: 20px;
   border: 1px solid var(--hd-border);
-  position: relative;
 }
 
-.layout-main-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--hd-brand), var(--hd-accent));
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Table styling */
 .table {
   border: 1px solid var(--hd-border);
   border-radius: var(--hd-radius-lg);
@@ -48,13 +31,9 @@
   vertical-align: middle;
 }
 
-.table tbody tr:last-child td {
-  border-bottom: none;
-}
+.table tbody tr:last-child td { border-bottom: none; }
 
-.table tbody tr:hover td {
-  background: var(--hd-brand-50);
-}
+.table tbody tr:hover td { background: var(--hd-brand-50); }
 
 /* Grid */
 .grid-heading-row {
@@ -72,47 +51,34 @@
   padding: 10px 12px;
 }
 
-.grid-row {
-  min-height: 40px;
-}
+.grid-row { min-height: 40px; }
 
-.grid-row:hover {
-  background: var(--hd-brand-50) !important;
-}
+.grid-row:hover { background: var(--hd-brand-50) !important; }
 
 .grid-static-col {
   padding: 8px 12px;
   font-size: 13px;
 }
 
-/* List view — card layout */
+/* List view */
 .list-row-container {
   border-bottom: 1px solid var(--hd-border);
   transition: background var(--hd-transition);
   padding: 2px 0;
 }
 
-.list-row-container:hover {
-  background: var(--hd-brand-50) !important;
-}
+.list-row-container:hover { background: var(--hd-brand-50) !important; }
 
-.list-row-container:nth-child(even) {
-  background: var(--hd-bg);
-}
+.list-row-container:nth-child(even) { background: var(--hd-bg); }
 
 .list-row {
   padding: 6px 0;
   text-align: left;
 }
 
-.list-row .list-id {
-  font-weight: 600;
-  color: var(--hd-text);
-}
+.list-row .list-id { font-weight: 600; color: var(--hd-text); }
 
-.list-row .list-id a {
-  color: var(--hd-brand) !important;
-}
+.list-row .list-id a { color: var(--hd-brand) !important; }
 
 .list-toolbar {
   background: var(--hd-bg-alt);

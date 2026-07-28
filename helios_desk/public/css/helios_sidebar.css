@@ -1,10 +1,6 @@
-/*
- * HELIOSDESK — Sidebar
- * Slim icon sidebar with expand/collapse
- */
 .sidebar-container {
   background: var(--hd-sidebar-bg) !important;
-  border-right: 1px solid var(--hd-border) !important;
+  border-right: 1px solid rgba(255,255,255,0.06) !important;
   width: var(--hd-sidebar-w) !important;
   transition: width var(--hd-transition);
   overflow: hidden;
@@ -15,36 +11,37 @@
   width: var(--hd-sidebar-collapsed) !important;
 }
 
-/* Sidebar header with logo + company name */
+/* Header with logo */
 .sidebar-header {
   height: 56px;
   display: flex;
   align-items: center;
-  padding: 0 14px;
-  border-bottom: 1px solid var(--hd-border);
-  gap: 10px;
+  padding: 0 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  gap: 12px;
   overflow: hidden;
   white-space: nowrap;
 }
 
 .sidebar-header .hd-logo {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--hd-radius);
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--hd-brand);
-  color: var(--hd-brand-text);
+  color: #fff;
   font-weight: 800;
   font-size: 14px;
 }
 
 .sidebar-header .hd-company-name {
   font-weight: 700;
-  font-size: 13.5px;
-  color: var(--hd-text);
+  font-size: 14px;
+  color: #F1F5F9;
+  letter-spacing: -0.01em;
   opacity: 1;
   transition: opacity var(--hd-transition);
 }
@@ -54,23 +51,25 @@
   width: 0;
 }
 
-/* Sidebar items */
+/* Item container */
 .sidebar-item-container {
-  margin: 2px 6px !important;
+  margin: 1px 8px !important;
 }
 
+/* Items */
 .sidebar-item {
-  border-radius: var(--hd-radius) !important;
-  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  padding: 9px 12px !important;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--hd-sidebar-text) !important;
-  transition: background var(--hd-transition), color var(--hd-transition), padding var(--hd-transition);
+  transition: all 150ms ease;
   background: transparent;
   min-height: 38px;
   display: flex !important;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  position: relative;
 }
 
 .sidebar-item .sidebar-item-icon {
@@ -79,6 +78,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--hd-sidebar-text);
+  transition: color 150ms ease;
 }
 
 .sidebar-item .sidebar-item-label {
@@ -89,70 +90,95 @@
 
 .sidebar-item:hover {
   background: var(--hd-sidebar-hover) !important;
-  color: var(--hd-text) !important;
+  color: #E2E8F0 !important;
+}
+
+.sidebar-item:hover .sidebar-item-icon {
+  color: #E2E8F0;
+}
+
+/* Active indicator bar */
+.sidebar-item-container.selected > .sidebar-item::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--hd-brand);
+  border-radius: 0 3px 3px 0;
 }
 
 .sidebar-item-container.selected > .sidebar-item {
-  background: var(--hd-sidebar-active) !important;
-  color: var(--hd-sidebar-text-active) !important;
+  background: rgba(99,102,241,0.12) !important;
+  color: #E2E8F0 !important;
   font-weight: 600 !important;
-  box-shadow: 0 2px 8px rgba(99,102,241,0.25);
 }
 
-/* Sidebar section labels */
+.sidebar-item-container.selected > .sidebar-item .sidebar-item-icon {
+  color: var(--hd-brand-300);
+}
+
+/* Section labels */
 .sidebar-section-label {
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--hd-text-muted);
-  padding: 12px 14px 4px;
+  color: var(--hd-sidebar-subtext);
+  padding: 20px 18px 6px;
   white-space: nowrap;
   overflow: hidden;
 }
 
 .collapsed .sidebar-section-label {
   text-align: center;
-  font-size: 8px;
-  padding: 8px 0 2px;
+  font-size: 7px;
+  padding: 12px 0 4px;
+  letter-spacing: 0.12em;
 }
 
-/* Collapse toggle button */
+/* Collapse toggle */
 .sidebar-collapse-btn {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid var(--hd-border);
+  border-top: 1px solid rgba(255,255,255,0.06);
   background: var(--hd-sidebar-bg);
   cursor: pointer;
-  color: var(--hd-text-muted);
-  transition: color var(--hd-transition);
+  color: var(--hd-sidebar-text);
+  transition: all 150ms ease;
   gap: 6px;
   font-size: 12px;
 }
 
 .sidebar-collapse-btn:hover {
-  color: var(--hd-text);
+  color: #E2E8F0;
+  background: var(--hd-sidebar-hover);
 }
 
-/* Tooltip on collapsed sidebar items */
+/* Collapsed state */
 .sidebar-container.collapsed .sidebar-item {
   justify-content: center;
-  padding: 8px 0 !important;
+  padding: 10px 0 !important;
 }
 
 .sidebar-container.collapsed .sidebar-item-label {
   display: none;
 }
 
-/* Hide Frappe native elements we replace */
+.sidebar-container.collapsed .sidebar-item-container.selected > .sidebar-item::before {
+  left: 0;
+}
+
+/* Frappe native elements */
 .sidebar-container .sidebar-header-onscroll,
 .sidebar-container .sidebar-footer,
 .sidebar-container .standard-sidebar-section:last-child .sidebar-item-label {
-  /* selectively hidden by JS */
 }
