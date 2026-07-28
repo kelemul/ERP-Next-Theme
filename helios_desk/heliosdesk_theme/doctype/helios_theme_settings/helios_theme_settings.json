@@ -103,7 +103,7 @@
    "fieldname": "default_theme_mode",
    "fieldtype": "Select",
    "label": "Default Theme Mode",
-   "options": "Light\nDark\nAuto",
+   "options": "Light\nDark\nAutomatic",
    "default": "Light"
   },
   {

@@ -6,11 +6,14 @@
 
   window.hdThemeMode = {
     current: function () {
-      return localStorage.getItem("hd_theme_mode") || "Light";
+      var m = localStorage.getItem("hd_theme_mode") || "Light";
+      if (m === "Auto") m = "Automatic";
+      return m;
     },
 
     resolve: function (mode) {
-      if (mode === "Auto") {
+      if (mode === "Auto") mode = "Automatic";
+      if (mode === "Automatic") {
         return window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "Dark"
           : "Light";
@@ -19,6 +22,7 @@
     },
 
     set: function (mode) {
+      if (mode === "Auto") mode = "Automatic";
       var resolved = this.resolve(mode);
       localStorage.setItem("hd_theme_mode", mode);
 
@@ -41,7 +45,7 @@
     },
 
     toggle: function () {
-      var modes = ["Light", "Dark", "Auto"];
+      var modes = ["Light", "Dark", "Automatic"];
       var cur = this.current();
       var idx = modes.indexOf(cur);
       var next = modes[(idx + 1) % modes.length];
@@ -63,8 +67,8 @@
       window
         .matchMedia("(prefers-color-scheme: dark)")
         .addEventListener("change", function () {
-          if (self.current() === "Auto") {
-            self.set("Auto");
+          if (self.current() === "Automatic") {
+            self.set("Automatic");
           }
         });
 

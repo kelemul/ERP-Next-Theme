@@ -7,7 +7,9 @@
 
   // 1. Theme mode (light/dark/auto)
   var mode = localStorage.getItem("hd_theme_mode") || "Light";
-  if (mode === "Auto") {
+  // Backward compat: old "Auto" → "Automatic"
+  if (mode === "Auto") mode = "Automatic";
+  if (mode === "Automatic") {
     mode = window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "Dark"
       : "Light";

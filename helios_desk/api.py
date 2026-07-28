@@ -261,9 +261,12 @@ def reset_workspace_for_user():
 
 @frappe.whitelist()
 def set_user_theme(mode):
-    allowed = ["Light", "Dark", "Auto"]
+    # Backward compat: old "Auto" → "Automatic"
+    if mode == "Auto":
+        mode = "Automatic"
+    allowed = ["Light", "Dark", "Automatic"]
     if mode not in allowed:
-        frappe.throw(_("Invalid theme mode. Use Light, Dark or Auto."))
+        frappe.throw(_("Invalid theme mode. Use Light, Dark or Automatic."))
     frappe.db.set_value("User", frappe.session.user, "desk_theme", mode)
     return "ok"
 

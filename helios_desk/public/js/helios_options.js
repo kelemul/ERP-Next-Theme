@@ -95,7 +95,7 @@
             window.hdThemeMode && window.hdThemeMode.set("Dark");
             break;
           case "theme-auto":
-            window.hdThemeMode && window.hdThemeMode.set("Auto");
+            window.hdThemeMode && window.hdThemeMode.set("Automatic");
             break;
           case "density-comfortable":
             window.hdDensity && window.hdDensity.set("Comfortable");
