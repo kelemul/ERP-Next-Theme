@@ -5,58 +5,51 @@
 (function () {
   "use strict";
 
+  function isHomePage() {
+    try {
+      var route = frappe.get_route && frappe.get_route();
+      if (!route) return false;
+      // Home page
+      if (route.length === 1 && route[0] === "") return true;
+      // Workspace page
+      if (route[0] === "workspaces") return true;
+    } catch (e) {
+      return false;
+    }
+    return false;
+  }
+
   function enhanceHome() {
-    var page = document.querySelector(".page-content");
-    if (!page) return;
+    if (!isHomePage()) return;
+    if (document.querySelector(".hd-smart-home")) return;
 
-    // Check if we are on the workspace/home page
-    var isHome = window.location.hash.indexOf("#workspaces") >= 0 || window.location.hash === "";
-    if (!isHome && frappe.get_route && frappe.get_route()[0] !== "") return;
-
-    // Only inject once
-    if (document.querySelector(".hd-sh-section")) return;
-
-    // Create smart home sections
-    var container = document.querySelector(".page-container .container-fluid") ||
-      document.querySelector(".page-content-wrapper");
+    var container =
+      document.querySelector(".page-content .page-content-wrapper") ||
+      document.querySelector(".layout-main-section") ||
+      document.querySelector(".container-fluid") ||
+      document.querySelector(".page-body > .row") ||
+      document.querySelector(".page-content");
     if (!container) return;
 
     var wrapper = document.createElement("div");
     wrapper.className = "hd-smart-home";
 
-    // 1. KPI Cards Row
-    var kpiRow = document.createElement("div");
-    kpiRow.className = "hd-sh-section";
-    kpiRow.innerHTML = '<div class="hd-sh-section-title">Key Metrics</div><div class="hd-sh-kpi-grid" id="hd-kpi-grid"></div>';
-    wrapper.appendChild(kpiRow);
+    var html =
+      '<div class="hd-sh-section"><div class="hd-sh-section-title">Key Metrics</div><div class="hd-sh-kpi-grid" id="hd-kpi-grid"></div></div>' +
+      '<div class="hd-sh-section"><div class="hd-sh-section-title">Quick Create</div><div class="hd-sh-quick-grid" id="hd-quick-grid"></div></div>' +
+      '<div class="hd-sh-section"><div class="hd-sh-section-title">Pending Items</div><div class="hd-sh-pending" id="hd-pending-list"></div></div>' +
+      '<div class="hd-sh-section"><div class="hd-sh-section-title">Recent Documents</div><div class="hd-sh-recent" id="hd-recent-list"></div></div>';
+    wrapper.innerHTML = html;
 
-    // 2. Quick Create
-    var quickRow = document.createElement("div");
-    quickRow.className = "hd-sh-section";
-    quickRow.innerHTML = '<div class="hd-sh-section-title">Quick Create</div><div class="hd-sh-quick-grid" id="hd-quick-grid"></div>';
-    wrapper.appendChild(quickRow);
+    // Insert at top of content area
+    var target = container.querySelector(".page-wrapper") || container;
+    target.insertBefore(wrapper, target.firstChild);
 
-    // 3. Pending Items
-    var pendingRow = document.createElement("div");
-    pendingRow.className = "hd-sh-section";
-    pendingRow.innerHTML = '<div class="hd-sh-section-title">Pending Items</div><div class="hd-sh-pending" id="hd-pending-list"></div>';
-    wrapper.appendChild(pendingRow);
-
-    // 4. Recent Documents
-    var recentRow = document.createElement("div");
-    recentRow.className = "hd-sh-section";
-    recentRow.innerHTML = '<div class="hd-sh-section-title">Recent Documents</div><div class="hd-sh-recent" id="hd-recent-list"></div>';
-    wrapper.appendChild(recentRow);
-
-    container.insertBefore(wrapper, container.firstChild);
-
-    // Load data
     loadKPIs();
     loadQuickCreate();
     loadPending();
     loadRecent();
 
-    // Refresh every 60 seconds
     setInterval(function () {
       loadKPIs();
       loadPending();
@@ -70,28 +63,22 @@
     frappe.call({
       method: "helios_desk.api.get_kpi_data",
       callback: function (r) {
-        if (!r.message) {
+        if (!r.message || r.message.length === 0) {
           grid.innerHTML = '<div class="hd-sh-empty">No metrics available</div>';
           return;
         }
         var html = "";
-        (r.message || []).forEach(function (kpi) {
+        r.message.forEach(function (kpi) {
           html +=
-            '<div class="hd-sh-kpi-card" onclick="frappe.set_route(\'' +
-            (kpi.route || "") +
-            '\')">' +
+            '<div class="hd-sh-kpi-card">' +
             '<div class="hd-sh-kpi-number">' +
             (kpi.value || 0) +
             "</div>" +
             '<div class="hd-sh-kpi-label">' +
-            (kpi.label || "") +
+            frappe.utils.escape_html(kpi.label || "") +
             "</div>" +
-            '<div class="hd-sh-kpi-trend ' +
-            ((kpi.trend || "").toLowerCase() === "up"
-              ? "hd-trend-up"
-              : "hd-trend-down") +
-            '">' +
-            (kpi.trend_text || "") +
+            '<div class="hd-sh-kpi-trend">' +
+            frappe.utils.escape_html(kpi.trend_text || "") +
             "</div>" +
             "</div>";
         });
@@ -113,19 +100,28 @@
           return;
         }
         var html = "";
-        (r.message || []).forEach(function (d) {
+        r.message.forEach(function (d) {
+          var label = d
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, function (c) {
+              return c.toUpperCase();
+            });
+          var icon = "";
+          try {
+            icon =
+              frappe.boot.doctype_icon &&
+              frappe.boot.doctype_icon[d]
+                ? frappe.boot.doctype_icon[d] + " "
+                : "";
+          } catch (e) {
+            icon = "";
+          }
           html +=
             '<div class="hd-sh-quick-btn" onclick="frappe.new_doc(\'' +
             d +
-            '\')">' +
-            frappe.boot.doctype_meta &&
-            frappe.boot.doctype_icon &&
-            frappe.boot.doctype_icon[d]
-              ? frappe.boot.doctype_icon[d] + " "
-              : "" +
-              (d.replace(/_/g, " ").replace(/\b\w/g, function (c) {
-                return c.toUpperCase();
-              })) +
+            "\')\">" +
+            icon +
+            label +
             "</div>";
         });
         grid.innerHTML = html;
@@ -146,7 +142,7 @@
           return;
         }
         var html = "";
-        (r.message || []).forEach(function (item) {
+        r.message.forEach(function (item) {
           html +=
             '<div class="hd-sh-pending-item" onclick="frappe.set_route(\'Form\',\'' +
             (item.doctype || "") +
@@ -154,14 +150,16 @@
             (item.name || "") +
             '\')">' +
             '<div class="hd-sh-pending-info">' +
-            '<span class="hd-sh-pending-title">' +
-            (item.subject || item.title || item.name || "") +
-            "</span>" +
-            '<span class="hd-sh-pending-meta">' +
-            (item.doctype || "") +
-            " · " +
-            (item.status || "") +
-            "</span>" +
+            "<strong>" +
+            frappe.utils.escape_html(
+              item.subject || item.title || item.name || ""
+            ) +
+            "</strong>" +
+            '<div class="hd-sh-pending-meta">' +
+            frappe.utils.escape_html(item.doctype || "") +
+            " &middot; " +
+            frappe.utils.escape_html(item.status || "") +
+            "</div>" +
             "</div>" +
             "</div>";
         });
@@ -180,7 +178,8 @@
         localStorage.getItem("hd_recent_docs") || "[]"
       );
       if (recent.length === 0) {
-        list.innerHTML = '<div class="hd-sh-empty">No recently viewed documents</div>';
+        list.innerHTML =
+          '<div class="hd-sh-empty">No recently viewed documents</div>';
         return;
       }
       var html = "";
@@ -192,73 +191,82 @@
           (r.name || "") +
           '\')">' +
           '<div class="hd-sh-pending-info">' +
-          '<span class="hd-sh-pending-title">' +
-          (r.label || r.name || "") +
-          "</span>" +
-          '<span class="hd-sh-pending-meta">' +
-          (r.doctype || "") +
-          " · " +
-          (r.time || "") +
-          "</span>" +
+          "<strong>" +
+          frappe.utils.escape_html(r.label || r.name || "") +
+          "</strong>" +
+          '<div class="hd-sh-pending-meta">' +
+          frappe.utils.escape_html(r.doctype || "") +
+          " &middot; " +
+          (r.time
+            ? frappe.datetime.comment_when(r.time)
+            : "") +
+          "</div>" +
           "</div>" +
           "</div>";
       });
       list.innerHTML = html;
     } catch (e) {
-      list.innerHTML = '<div class="hd-sh-empty">Error loading recents</div>';
+      list.innerHTML =
+        '<div class="hd-sh-empty">Error loading recents</div>';
     }
   }
 
-  // Hook into Frappe route change
-  if (frappe.events) {
-    frappe.events.on("route_options_set", function () {
-      setTimeout(enhanceHome, 500);
-    });
-  }
-
-  // Track viewed documents for recents
   function trackRecent() {
-    var route = frappe.get_route && frappe.get_route();
-    if (!route || route[0] !== "Form" || !route[1] || !route[2]) return;
-    var doctype = route[1];
-    var name = route[2];
-    var meta = frappe.boot.doctype_meta && frappe.boot.doctype_meta[doctype];
-    var label = meta && meta.name;
-    if (!label) label = name;
-
     try {
+      var route = frappe.get_route && frappe.get_route();
+      if (!route || route[0] !== "Form" || !route[1] || !route[2]) return;
       var recent = JSON.parse(
         localStorage.getItem("hd_recent_docs") || "[]"
       );
       recent = recent.filter(function (r) {
-        return !(r.doctype === doctype && r.name === name);
+        return !(r.doctype === route[1] && r.name === route[2]);
       });
       recent.unshift({
-        doctype: doctype,
-        name: name,
-        label: label,
+        doctype: route[1],
+        name: route[2],
+        label: route[2],
         time: new Date().toISOString(),
       });
       if (recent.length > 30) recent = recent.slice(0, 30);
       localStorage.setItem("hd_recent_docs", JSON.stringify(recent));
     } catch (e) {
-      // ignore
+      /* ignore */
     }
   }
 
-  // Init
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", function () {
-      enhanceHome();
-      trackRecent();
-    });
-  } else {
+  // Init on page load
+  function init() {
+    // Try immediately
     enhanceHome();
     trackRecent();
+
+    // Re-try after frappe is fully ready
+    var tries = 0;
+    var interval = setInterval(function () {
+      tries++;
+      if (tries > 20) {
+        clearInterval(interval);
+        return;
+      }
+      if (typeof frappe !== "undefined" && frappe.get_route) {
+        clearInterval(interval);
+        enhanceHome();
+        trackRecent();
+      }
+    }, 250);
   }
 
-  // Track on route change
-  if (frappe.events) {
-    frappe.events.on("route_options_set", trackRecent);
+  // Hook into Frappe route changes
+  $(document).on("route", function () {
+    setTimeout(function () {
+      enhanceHome();
+      trackRecent();
+    }, 300);
+  });
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();
