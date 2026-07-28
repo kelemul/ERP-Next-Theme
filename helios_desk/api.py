@@ -149,11 +149,15 @@ def build_dark_palette(brand, accent):
 # ---------------------------------------------------------------------------
 
 @frappe.whitelist(allow_guest=True)
-def get_theme_css():
-    """Return the full :root { … } CSS block with the computed palette."""
+def get_theme_css(primary_color=None, brand_style=None):
+    """Return the full :root { … } CSS block with the computed palette.
+    Pass primary_color to preview unsaved changes."""
     try:
-        settings = frappe.get_single("Helios Theme Settings")
-        brand = settings.primary_color or "#6366F1"
+        if primary_color:
+            brand = primary_color
+        else:
+            settings = frappe.get_single("Helios Theme Settings")
+            brand = settings.primary_color or "#6366F1"
         accent = mix(brand, "#F59E0B", 0.4)
     except Exception:
         brand = "#6366F1"
@@ -272,3 +276,91 @@ def get_user_preferences():
         "density": user.get_onload().get("hd_density", "Comfortable"),
         "font_scale": user.get_onload().get("hd_font_scale", 100),
     }
+
+
+@frappe.whitelist()
+def preview_color(color):
+    """Return hue offset for a given hex color."""
+    r, g, b = hex_to_rgb(color)
+    h, s, v = colorsys.rgb_to_hsv(r / 255, g / 255, b / 255)
+    return {"hue_offset": round((h - 0.5) * 60, 1)}
+
+
+@frappe.whitelist()
+def broadcast_theme():
+    """Manually broadcast current theme to all users."""
+    from helios_desk.events import _broadcast_theme_update
+    _broadcast_theme_update()
+    return "ok"
+
+
+@frappe.whitelist()
+def get_kpi_data():
+    """Return KPI metrics for Smart Home dashboard."""
+    kpis = []
+    try:
+        todo_count = frappe.db.count("ToDo", {"status": "Open"})
+        kpis.append({"label": "Open ToDos", "value": todo_count, "trend": "neutral", "trend_text": "", "route": "List/ToDo"})
+    except Exception:
+        pass
+    try:
+        user_count = frappe.db.count("User", {"enabled": 1})
+        kpis.append({"label": "Active Users", "value": user_count, "trend": "neutral", "trend_text": "", "route": "List/User"})
+    except Exception:
+        pass
+    return kpis
+
+
+@frappe.whitelist()
+def get_quick_create_list():
+    """Return doctypes suitable for quick-create."""
+    return ["ToDo", "Event", "Note"]
+
+
+@frappe.whitelist()
+def get_pending_items():
+    """Return pending open ToDos for the current user."""
+    items = frappe.get_all("ToDo", filters={"status": "Open", "allocated_to": frappe.session.user}, fields=["name", "description", "status", "doctype"], limit=10)
+    result = []
+    for item in items:
+        result.append({"subject": item.description or item.name, "name": item.name, "doctype": "ToDo", "status": item.status})
+    return result
+
+
+@frappe.whitelist()
+def get_notifications(tab="all"):
+    """Return notifications for the notification panel."""
+    notifications = frappe.get_all("Notification Log", filters={"for_user": frappe.session.user}, fields=["*"], limit=20, order_by="creation desc")
+    unread_count = frappe.db.count("Notification Log", {"for_user": frappe.session.user, "read": 0})
+    return {"notifications": notifications, "unread_count": unread_count}
+
+
+@frappe.whitelist()
+def get_unread_count():
+    return frappe.db.count("Notification Log", {"for_user": frappe.session.user, "read": 0})
+
+
+@frappe.whitelist()
+def apply_preset(preset_name):
+    """Apply a theme preset to the active Helios Theme Settings."""
+    preset = frappe.get_doc("Helios Theme Preset", preset_name)
+    settings = frappe.get_single("Helios Theme Settings")
+    settings.primary_color = preset.primary_color
+    settings.brand_style = preset.brand_style
+    settings.sidebar_style = preset.sidebar_style
+    settings.navbar_style = preset.navbar_style
+    settings.save(ignore_permissions=True)
+    broadcast_theme()
+    return "ok"
+
+
+def has_permission(doc, ptype, user):
+    if ptype == "read":
+        return True
+    return "System Manager" in frappe.get_roles(user)
+
+
+def permission_query(doctype, user):
+    if "System Manager" in frappe.get_roles(user):
+        return ""
+    return "1=0"

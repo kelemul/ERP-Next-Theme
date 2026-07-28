@@ -4,17 +4,19 @@ frappe.ui.form.on("Helios Theme Settings", {
         frm.add_custom_button(__("Preview Theme"), function () {
             frappe.call({
                 method: "helios_desk.api.get_theme_css",
-                args: { settings_name: frm.doc.name },
+                args: { primary_color: frm.doc.primary_color || "#6366F1" },
                 callback: function (r) {
                     if (r.message) {
-                        var w = window.open("", "_blank", "width=1400,height=900");
-                        w.document.write(
-                            "<html><head><style>" +
-                            r.message +
-                            "</style></head><body>" +
-                            "<h1>Theme Preview</h1><p>Apply this CSS and inspect the result.</p>" +
-                            "</body></html>"
-                        );
+                        var existing = document.getElementById("hd-preview-theme");
+                        if (existing) existing.remove();
+                        var style = document.createElement("style");
+                        style.id = "hd-preview-theme";
+                        style.textContent = r.message;
+                        document.head.appendChild(style);
+                        frappe.show_alert({
+                            message: __("Theme preview applied. Close to revert."),
+                            indicator: "green",
+                        });
                     }
                 },
             });
@@ -38,28 +40,41 @@ frappe.ui.form.on("Helios Theme Settings", {
 
         // Apply button
         frm.add_custom_button(__("Apply Theme Now"), function () {
-            frm.save();
-            frappe.call({
-                method: "helios_desk.api.broadcast_theme",
-                callback: function () {
-                    frappe.show_alert({
-                        message: __("Theme applied and broadcast to all users"),
-                        indicator: "green",
-                    });
-                },
+            frm.save("Save", null, null, function () {
+                frappe.call({
+                    method: "helios_desk.api.broadcast_theme",
+                    callback: function () {
+                        localStorage.removeItem("hd_theme_css");
+                        frappe.show_alert({
+                            message: __("Theme applied — reloading..."),
+                            indicator: "green",
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 600);
+                    },
+                });
             });
         });
     },
 
     primary_color: function (frm) {
-        frappe.call({
-            method: "helios_desk.api.preview_color",
-            args: { color: frm.doc.primary_color },
-            callback: function (r) {
-                if (r.message) {
-                    frm.set_value("primary_hue_offset", r.message.hue_offset);
-                }
-            },
-        });
+        if (frm.doc.primary_color) {
+            frappe.call({
+                method: "helios_desk.api.get_theme_css",
+                args: { primary_color: frm.doc.primary_color },
+                callback: function (r) {
+                    if (r.message) {
+                        var existing = document.getElementById("hd-preview-theme");
+                        if (!existing) {
+                            existing = document.createElement("style");
+                            existing.id = "hd-preview-theme";
+                            document.head.appendChild(existing);
+                        }
+                        existing.textContent = r.message;
+                    }
+                },
+            });
+        }
     },
 });

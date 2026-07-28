@@ -161,7 +161,7 @@
       '<li><a onclick="frappe.set_route(\'Form\',\'User\',\'' +
       (user.name || "") +
       '\')">Edit Profile</a></li>' +
-      '<li><a onclick="window.hdThemeMode?hdThemeMode.toggle():''">Toggle Theme</a></li>' +
+      '<li><a onclick="if(window.hdThemeMode)hdThemeMode.toggle()">Toggle Theme</a></li>' +
       '<li><a onclick="frappe.call({method:\'helios_desk.api.reset_workspace_for_user\',callback:function(){frappe.show_alert(\'Layout Reset\');location.reload()}})">Reset Layout</a></li>' +
       '<li class="divider"></li>' +
       '<li><a href="/?cmd=web_logout">Logout</a></li>';

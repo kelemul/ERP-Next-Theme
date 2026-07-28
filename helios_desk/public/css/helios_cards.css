@@ -31,42 +31,52 @@
 
 /* Widgets / Workspace cards */
 .widget.shortcut-widget-box,
-.widget-group .widget {
-  background: var(--hd-surface) !important;
-  border: 1px solid var(--hd-border) !important;
-  border-radius: var(--hd-radius-lg) !important;
-  box-shadow: var(--hd-shadow-sm);
-  transition: all var(--hd-transition);
+.widget.shortcut-widget-box .widget-body {
+  background: #f1f5f9 !important;
+  background-color: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease;
   padding: 16px 20px;
   position: relative;
   overflow: hidden;
 }
 
+.widget.shortcut-widget-box:hover .widget-body,
+.widget.shortcut-widget-box:hover {
+  background-color: #e2e8f0 !important;
+}
+
+/* Metric cards / number widgets */
+.widget-card,
+.number-widget-box,
+.number-widget-box .card-body {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 12px !important;
+}
+
+.widget-card .widget-head,
+.number-widget-box .widget-head {
+  background-color: transparent !important;
+  border-bottom: none !important;
+}
+
+/* Remove the top colored stripe on all workspace widgets */
 .widget.shortcut-widget-box::before,
-.widget-group .widget::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--hd-brand), var(--hd-accent));
+.widget-group .widget::before,
+.frappe-card::before,
+.panel::before {
+  display: none !important;
 }
 
-.widget.shortcut-widget-box:hover,
-.widget-group .widget:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--hd-shadow-lg);
-  border-color: var(--hd-brand) !important;
-}
-
-.widget.number-widget-box {
-  background: linear-gradient(135deg, var(--hd-brand-50), var(--hd-surface)) !important;
-}
-
-.widget.number-widget-box .widget-value {
-  color: var(--hd-brand-700) !important;
-  font-weight: 800;
+/* Replace top stripe with standard border */
+.widget-card,
+.shortcut-widget-box,
+.number-widget-box {
+  border-top: 1px solid #cbd5e1 !important;
 }
 
 /* Tabs */

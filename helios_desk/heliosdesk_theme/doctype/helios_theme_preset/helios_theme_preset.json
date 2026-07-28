@@ -1,7 +1,6 @@
 {
  "actions": [],
- "autoname": "field:preset_name",
- "creation": "2026-07-27 00:00:00.000000",
+ "creation": "2026-07-27 00:00:00",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -10,69 +9,81 @@
   "brand_style",
   "sidebar_style",
   "navbar_style",
-  "is_default"
+  "is_default",
+  "amended_from"
  ],
  "fields": [
   {
    "fieldname": "preset_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Preset Name",
    "reqd": 1,
    "unique": 1
   },
   {
+   "default": "#6366F1",
    "fieldname": "primary_color",
    "fieldtype": "Color",
-   "in_list_view": 1,
-   "label": "Primary Color",
-   "default": "#6366F1"
+   "label": "Primary Color"
   },
   {
+   "default": "Modern",
    "fieldname": "brand_style",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "label": "Brand Style",
-   "options": "Modern\nClassic\nMinimal\nBold\nWarm",
-   "default": "Modern"
+   "options": "Modern\nClassic\nMinimal\nBold\nWarm"
   },
   {
+   "default": "Gradient",
    "fieldname": "sidebar_style",
    "fieldtype": "Select",
    "label": "Sidebar Style",
-   "options": "Gradient\nSolid\nFrosted",
-   "default": "Gradient"
+   "options": "Gradient\nSolid\nFrosted"
   },
   {
+   "default": "Frosted",
    "fieldname": "navbar_style",
    "fieldtype": "Select",
    "label": "Navbar Style",
-   "options": "Frosted\nSolid\nColored",
-   "default": "Frosted"
+   "options": "Frosted\nSolid\nColored"
   },
   {
+   "default": "0",
    "fieldname": "is_default",
    "fieldtype": "Check",
-   "in_list_view": 1,
-   "label": "Is Default",
-   "default": 0
+   "label": "Is Default"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Helios Theme Preset",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
- "modified": "2026-07-27 00:00:00.000000",
+ "links": [],
+ "modified": "2026-07-28 09:44:19.579495",
  "modified_by": "Administrator",
-  "module": "HeliosDesk Theme",
+ "module": "HeliosDesk Theme",
  "name": "Helios Theme Preset",
  "owner": "Administrator",
  "permissions": [
-   {
-    "role": "System Manager",
-    "create": 1,
-    "read": 1,
-    "write": 1,
-    "delete": 1
-   }
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "System Manager",
+   "select": 1,
+   "write": 1
+  }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "preset_name",
+ "states": [],
  "track_changes": 1
 }
